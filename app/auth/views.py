@@ -1,5 +1,3 @@
-
-from app.main import main
 from flask import render_template,flash, request,redirect, url_for
 from flask_login import login_user, logout_user, login_required
 from .forms import RegistrationForm, LoginForm
@@ -24,15 +22,14 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
-@auth.route('/signup', methods = ["GET","POST"])
+@auth.route('/signup', methods = ["POST","GET"])
 def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email = form.email.data, username = form.username.data, password = form.password.data)
-        db.session.add(user)
-        db.session.commit()
-
-        mail_message("Welcome to My-Blog","email/welcome_user",user.email,user=user)
+        user = User(username = form.username.data,
+                    email = form.email.data,
+                    password = form.password.data)
+        user.save_u()
+        mail_message("Welcome to My-Blog","email/welcome",user.email,user=user)
         return redirect(url_for('auth.login'))
-        title = 'New Account'
     return render_template('auth/signup.html', registration_form = form)

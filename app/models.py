@@ -4,16 +4,12 @@ from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 
 
-class User (db.Model):
+class User (db.Model,UserMixin):
     __tablename__='users'
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),unique = True,nullable = False)
     email = db.Column(db.String(255), unique = True,nullable = False)
-    bio = db.Column(db.String(255),default ='My Bio')
-    profile_pic_path = db.Column(db.String(150),default ='default.png')
-    hashed_password = db.Column(db.String(255),nullable = False)
-    blog = db.relationship('Blog', backref='user', lazy='dynamic')
-    comment = db.relationship('Comment', backref='user', lazy='dynamic')
+    
 
     @property
     def set_password(self):
@@ -56,15 +52,14 @@ class Blog(db.Model):
         db.session.delete(self)
         db.session.commit()
 
-    def get_blog(id):
-        blog = Blog.query.filter_by(id=id).first()
-
-        return blog
-
     def __repr__(self):
-        return f"Blog {self.title}"
+        return f"Blog ('{self.title}', '{self.created_at}')"
 
-
+    @classmethod
+    def get_blog(id):
+        blog = Blog.query.filter_by(id = id).order_by(Blog.created_at.desc()).all()
+        return blog
+        
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -107,13 +102,14 @@ class Follower(db.Model):
         return f'Follower {self.email}'
         
 class Quote:
+    __tablename__='quotes'
     '''
     Blueprint class for quotes consumed from API
     '''
     def __init__(self, author, quote):
         self.author = author
         self.quote = quote
-        
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
