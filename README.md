@@ -1,6 +1,11 @@
 # My-Blog
 # Author
 [Maryam-Muchai](https://github.com/MaryamMuchai/My-Blog.git)
+## Sign up form
+![Screenshot from 2021-05-03 02-11-56](https://user-images.githubusercontent.com/78798386/116831152-4ed65900-abb6-11eb-819d-651d3fc6ef0a.png)
+## Login
+![Screenshot from 2021-05-03 02-12-09](https://user-images.githubusercontent.com/78798386/116831175-72999f00-abb6-11eb-8665-03209d638834.png)
+
 # Description
  This is a flask application of a personal blogging website where you can create and share your opinions and other users can read and comment on them. Additionally, the application displays random quotes to inspire users. 
  # Live link
@@ -34,5 +39,5 @@ https://github.com/MaryamMuchai/My-Blog.git
 # Contact Information
 * Incase of any question or contributions, email:maryammuchai@gmail.com
 License
-* MIT License:
-### Copyright (c) 2021 Maryam Muchai)
+* MIT [License](LICENSE)
+### Copyright (c) 2021 Maryam Muchai
