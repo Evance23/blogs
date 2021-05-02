@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+<div class="row">
+<!-- displaying  Username-->
+  <div class="col-md-4">
+    <h3> {{user.username| capitalize}} </h3>
+
+    <!--Displaying user bio-->
+    <div class="card-body">
+        <h4 class="card-title text-center">{{current_user.username|title}}</h4>
+        <hr>
+        <p> {{current_user.email}} </p>
+        <p><i class="fas fa-quote-left"></i> {{current_user.bio}} <i class="fas fa-quote-right"></i> </p>
+        <button class="btn btn-sm btn-info" id="showform"> Update Profile</button>
+      </div>
+
+  <!--Display profile photo-->
+  <div class="card testimonial-card">
+    <div class="card-up indigo lighten-1"></div>
+    <div class="avatar mx-auto white">
+      <img src="{{profile_pic_path}}" class="rounded-circle account-img mt-2" alt="woman avatar">
+    </div>
+
+    {%else%}
+    <p>No profile picture</p>
+    {% endif %}
+  </div>
+  <div class="col-md-6">
+    <div class="container mt-4" >
+      <div id="profileupdate">
+        <h2>Update Your Profile Here</h2>
+          {{wtf.quick_form(form)}}
+      </div>
+</div>
+</div>
+{% endblock %}
