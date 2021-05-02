@@ -1,10 +1,10 @@
-import os
 from flask import render_template,redirect,url_for,abort,request,flash
-from app.main import main
+from . import main
 from .forms import UpdateProfile,NewBlog
 from flask_login import login_required,current_user
 from ..email import mail_message
-from app.models import User,Blog,Comment,Follower
+from ..models import User,Blog,Comment,Follower
+from ..import db, photos
 
 @main.route('/')
 def index():
@@ -13,7 +13,7 @@ def index():
     serialized_data = []
     for blog in blogs:
         serialized_data.append(blog.serialize)
-    return render_template('index.html', quote = quotes,blogs=blogs)
+    return render_template('index.html', quotes = quotes,blogs=blogs)
 
 @main.route('/new_post',methods=['POST','GET'])
 @login_required
@@ -50,7 +50,7 @@ def updatedblog(blog_id):
         form.content.data = blog.content
     return render_template('newblogs.html', form = form)
 
-@blogs.route('/blog/<blog_id>/delete', methods=["DELETE"])
+@main.route('/blog/<blog_id>/delete', methods=["DELETE"])
 @login_required
 def delete_post(blog_id):
     blog = Blog.query.filter_by(blog_id).first()
