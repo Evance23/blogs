@@ -30,7 +30,7 @@ def new_blog():
             mail_message("New Blog Post","email/new_blog",subscriber.email,blog=blog)
         return redirect(url_for('main.index'))
         flash('You Posted a new Blog')
-    return render_template('newblog.html', form = form)
+    return render_template('newblogs.html', form = form)
 
 @main.route('/blog/<blog_id>/update',methods = ['GET','POST'])
 @login_required
@@ -48,7 +48,7 @@ def updatedblog(blog_id):
     if request.method == 'GET':
         form.title.data = blog.title
         form.content.data = blog.content
-    return render_template('newblog.html', form = form)
+    return render_template('newblogs.html', form = form)
 
 @blogs.route('/blog/<blog_id>/delete', methods=["DELETE"])
 @login_required
@@ -63,7 +63,7 @@ def delete_post(blog_id):
 @main.route('/user/<string:username>')
 def user_posts(username):
     user = User.query.filter_by(username=username).first()
-    return render_template('userposts.html',blogs=blogs,user = user)
+    return render_template('user.html',blogs=blogs,user = user)
 
 
 @main.route('/follower',methods = ['POST','GET'])

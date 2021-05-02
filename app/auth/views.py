@@ -1,6 +1,7 @@
 from flask import render_template,flash, request,redirect, url_for
 from flask_login import login_user, logout_user, login_required
 from .forms import RegistrationForm, LoginForm
+from ..email import mail_message
 
 @auth.route('/login', methods = ['GET','POST'])
 def login():
@@ -24,7 +25,10 @@ def signup():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(email = form.email.data, username = form.username.data, password = form.password.data)
-        user.save_u()
+        db.session.add(user)
+        db.session.commit()
+
         mail_message("Welcome to My-Blog","email/welcome_user",user.email,user=user)
         return redirect(url_for('auth.login'))
+        title = 'New Account'
     return render_template('auth/signup.html', registration_form = form)
