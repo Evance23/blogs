@@ -24,6 +24,7 @@ def create_app():
 
     login_manager.init_app(app)
     bootstrap.init_app(app,photos)
+    db = SQLAlchemy()
     configure_uploads(app,photos)
     mail.init_app(app)
 
