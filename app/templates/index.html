@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<h1> Welcome to my blog! Enjoy.</h1>
+<div class =" container">
+    {% if current_user.is_auth %} 
+    <a class="btn btn " href="{{url_for('blog')}}">Post</a>
+{% endif %} 
+</div>
+
+
+
+
+{% endblock %}
