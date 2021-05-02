@@ -106,6 +106,14 @@ class Follower(db.Model):
     def __repr__(self):
         return f'Follower {self.email}'
         
+class Quote:
+    '''
+    Blueprint class for quotes consumed from API
+    '''
+    def __init__(self, author, quote):
+        self.author = author
+        self.quote = quote
+        
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)

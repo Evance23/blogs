@@ -5,6 +5,7 @@ from flask_login import login_required,current_user
 from ..email import mail_message
 from ..models import User,Blog,Comment,Follower
 from ..import db, photos
+from app.requests import get_quotes
 
 @main.route('/')
 def index():
