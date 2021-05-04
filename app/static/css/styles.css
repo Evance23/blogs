@@ -2,9 +2,7 @@ content {
     flex: 1 0 auto;
 }
 
-.footer {
-    flex-shrink: 0;
-}
+
 
 footer {
     text-align: center;
@@ -12,13 +10,13 @@ footer {
 }
 
 .content {
-        background-color: #ebe4e4;
-        color: #eeeaea;
+        background-color: #020202;
+        color: #161515;
         margin-top: 5rem;
       }
       
-      h1, h2, h3, h4, h5, h6 {
-        color: #f0eaea;
+      h2, h3, h4, h5, h6 {
+        color: #0909c4;
         font-weight:900;
         text-align: center;
       }
@@ -40,15 +38,32 @@ footer {
       }
       
       .content-section {
-        background: #ffffff;
+        background: #161616;
         padding: 10px 20px;
         border: 1px solid #dddddd;
         border-radius: 3px;
         margin-bottom: 20px;
       }
 body{
-    background-color: rgb(71, 65, 65);
-    background-position:center;
-    scroll-behavior: smooth;
-
+  color: rgb(8, 8, 8);
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat; 
+  font-family: 'Prompt', sans-serif; 
+}
+.userblog {
+  background-color: rgb(3, 3, 3);
+}
+.singleblog{
+  background-color: rgba(255, 255, 255, 0.924);  
+  color: black;
+}
+#submit{
+  background-color: green;
+  border-radius: 5px;
+}
+h1 {
+  color: #f8f7f7;
+  font-weight: 800;
 }

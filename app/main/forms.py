@@ -1,25 +1,23 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, ValidationError
 from wtforms.validators import Required,Email
-from flask_login import current_user
 from ..models import User
+from flask_login import current_user
+from flask_wtf.file import FileField
 
 class UpdateProfile(FlaskForm):
     bio = TextAreaField('Write a brief bio about you.',validators = [Required()])
     submit = SubmitField('Save')
     username = StringField('Input your username',validators=[Required()])
     email = StringField('Email', validators=[Required(),Email()])
+    profile_pic = FileField('profile pic', validators=[Required()]) 
 
 
-class NewBlog(FlaskForm):
+class CreateBlog(FlaskForm):
     title = StringField('Title', validators=[Required()])
     content = TextAreaField('Blog Content', validators=[Required()])
     submit = SubmitField('Post')
-
-
-class CommentForm(FlaskForm):
-    comment = TextAreaField('Comment Here', validators=[Required()])
-    submit = SubmitField('Comment')
+    
 
     def validate_email(self,email):
         if email.data != current_user.email:

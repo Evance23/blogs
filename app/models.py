@@ -1,15 +1,23 @@
-from .import db,login_manager
+from . import db,login_manager
 from flask_login import current_user,UserMixin
 from werkzeug.security import generate_password_hash,check_password_hash
 from datetime import datetime
 
 
-class User (db.Model,UserMixin):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+class User (UserMixin,db.Model):
     __tablename__='users'
     id = db.Column(db.Integer,primary_key = True)
-    username = db.Column(db.String(255),unique = True,nullable = False)
-    email = db.Column(db.String(255), unique = True,nullable = False)
-    
+    username = db.Column(db.String(255))
+    email = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String(20), nullable=False, default='default.jpg')
+    hashed_password = db.Column(db.String(60), nullable=False)
+    bio = db.Column(db.String(255),default = 'My default Bio') 
+    blog = db.relationship('Blog', backref='user', lazy='dynamic')
+    comment = db.relationship('Comment', backref='user', lazy='dynamic')
 
     @property
     def set_password(self):
@@ -17,19 +25,19 @@ class User (db.Model,UserMixin):
 
     @set_password.setter
     def password(self, password):
-        self.secure_password = generate_password_hash(password)
+        self.hashed_password = generate_password_hash(password)
 
     def verify_password(self, password):
-        return check_password_hash(self.secure_password,password) 
+        return check_password_hash(self.hashed_password,password) 
     
-    def save_u(self):
+    def save(self):
         db.session.add(self)
         db.session.commit()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
-    
+
     def __repr__(self):
         return f'User {self.username}'
 
@@ -38,7 +46,6 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(50), nullable = False)
     content = db.Column(db.Text(), nullable = False)
-    feature_image= db.Column(db.String,nullable=False)
     comment = db.relationship('Comment', backref='blog', lazy='dynamic')
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -53,11 +60,11 @@ class Blog(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return f"Blog ('{self.title}', '{self.created_at}')"
+        return f"Blog{self.title}"
 
     @classmethod
     def get_blog(id):
-        blog = Blog.query.filter_by(id = id).order_by(Blog.created_at.desc()).all()
+        blog = Blog.query.filter_by(id = id).first()
         return blog
         
 class Comment(db.Model):
@@ -73,9 +80,13 @@ class Comment(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        db.session.remove(self)
+        db.session.commit()
+
     @classmethod
     def get_comment(id):
-        comment = Comment.query.filter_by(id=id)
+        comment = Comment.query.all(id=id)
         return comment
 
     def delete(self):
@@ -83,7 +94,7 @@ class Comment(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return f'comment: {self.comment}'
+        return f'comment{self.comment}'
 
 
 class Follower(db.Model):
@@ -93,7 +104,7 @@ class Follower(db.Model):
     email = db.Column(db.String(255),unique=True, index=True)
     
 
-    def save(self):
+    def save_follower(self):
         db.session.add(self)
         db.session.commit()
 
@@ -109,7 +120,3 @@ class Quote:
     def __init__(self, author, quote):
         self.author = author
         self.quote = quote
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)

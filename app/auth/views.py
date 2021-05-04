@@ -5,7 +5,7 @@ from ..email import mail_message
 from app.auth import auth
 from app.models import User
 
-@auth.route('/login', methods = ['GET','POST'])
+@auth.route('/login', methods = ['POST','GET'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -29,7 +29,7 @@ def signup():
         user = User(username = form.username.data,
                     email = form.email.data,
                     password = form.password.data)
-        user.save_u()
-        mail_message("Welcome to My-Blog","email/welcome",user.email,user=user)
+        user.save()
+        mail_message("Welcome to My-Blog","email/welcome_user",user.email,user=user)
         return redirect(url_for('auth.login'))
     return render_template('auth/signup.html', registration_form = form)
