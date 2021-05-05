@@ -14,7 +14,7 @@ class User (UserMixin,db.Model):
     username = db.Column(db.String(255))
     email = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String(20), nullable=False, default='default.jpg')
-    hashed_password = db.Column(db.String(60), nullable=False)
+    hashed_password = db.Column(db.String(250), nullable=False)
     bio = db.Column(db.String(255),default = 'My default Bio') 
     blog = db.relationship('Blog', backref='user', lazy='dynamic')
     comment = db.relationship('Comment', backref='user', lazy='dynamic')
@@ -63,9 +63,9 @@ class Blog(db.Model):
         return f"Blog{self.title}"
 
     @classmethod
-    def get_blog(cls):
-        return Blog.query.order_by(Blog.created_at.desc()).all()
-        
+    def get_blog(id):
+        blog = Blog.query.filter_by(id = id).first()
+        return blog
         
 class Comment(db.Model):
     __tablename__ = 'comments'
