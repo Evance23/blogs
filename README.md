@@ -2,7 +2,7 @@
 # Author
 [Maryam-Muchai](https://github.com/MaryamMuchai/My-Blog.git)
 # Live Link
-
+https://marya-myblog.herokuapp.com/
 # Description
  This is a flask application of a personal blogging website where you can create and share your opinions and other users can read and comment on them. Additionally, the application displays random quotes to inspire users. 
 # User Story in Pictures
@@ -12,7 +12,7 @@
 * User can view the most recent posts
 * User can subscribe to blog mailing list and receives an email alert when a new post is made.
 * User can comment on blog posts
-![Screenshot from 2021-05-05 22-22-18](https://user-images.githubusercontent.com/78798386/117206115-1a071380-adfb-11eb-961f-798e2e2190aa.png)
+![Screenshot from 2021-05-06 00-15-09](https://user-images.githubusercontent.com/78798386/117212633-432ba200-ae03-11eb-82e1-879978e461f7.png)
 
 ### Blog view
 * Sign in to the blog
