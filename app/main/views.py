@@ -2,30 +2,29 @@ from flask import render_template,redirect,url_for,abort,request,flash
 from app.main import main
 from .forms import UpdateProfile,CreateBlog
 from flask_login import login_required,current_user
-from ..email import mail_message
-from app.models import User,Blog,Comment,Follower
+from ..email import mail_message, follower_message
+from app.models import User,Blog,Comment,User
 from ..import db
 from app.requests import get_quotes
 
-@main.route('/')
-def index():
-    quotes = get_quotes()
-    blogs = Blog.query.all()
 
-    if request.method == "POST":
-        new_follower = Followers(email = request.form.get("follower"))
+
+@main.route("/",)
+def index():
+    blogs = Blog.get_blog() 
+    quotes = get_quotes()
+
+
     return render_template("index.html",
                             blogs = blogs,
                             quotes = quotes)
-def save_picture(form_picture):
-    picture_path =('app/static/photos')
-    return picture_path
 
 
-@main.route('/new_post', methods=['POST','GET'])
+
+@main.route('/new_post', methods=['GET','POST'])
 @login_required
 def new_blog():
-    followers = Follower.query.all()
+    users = User.query.all()
     form = CreateBlog()
     if form.validate_on_submit():
         title = form.title.data
@@ -34,8 +33,8 @@ def new_blog():
         blog = Blog(title=title,content=content,user_id=user_id)
 
         blog.save()
-        for follower in followers:
-            mail_message("New Blog Post","email/new_blog",follower.email,blog=blog)
+        for user in users:
+            follower_message("New Blog Post","email/new_blog",user.email,blog=blog)
         return redirect(url_for('main.index'))
         flash('You Posted a new Blog')
     return render_template('newblogs.html', form = form)
@@ -83,7 +82,7 @@ def delete_post(blog_id):
 def user_posts(username):
     user = User.query.filter_by(username=username).first()
     blogs = Blog.query.filter_by(user=user)
-    return render_template('post.html',blogs=blogs,user = user)
+    return render_template('userposts.html',blogs=blogs,user = user)
 
 
 

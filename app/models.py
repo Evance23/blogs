@@ -63,9 +63,9 @@ class Blog(db.Model):
         return f"Blog{self.title}"
 
     @classmethod
-    def get_blog(id):
-        blog = Blog.query.filter_by(id = id).first()
-        return blog
+    def get_blog(cls):
+        return Blog.query.order_by(Blog.created_at.desc()).all()
+        
         
 class Comment(db.Model):
     __tablename__ = 'comments'

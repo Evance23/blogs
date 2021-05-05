@@ -24,7 +24,7 @@
                                 <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
                                 <p>{{blog.content}}</p>
                                 <p> <a class="btn btn-sm btn-info" href="{{url_for('main.blog',id = blog.id)}}" > Comment</a> {{blog.comment.count()}} Comments</p>
-                                
+                                <a href="{{url_for('main.index')}}" class="btn btn-sm btn-outline-info mb-2"></a>
                             </div>
                         </div> 
                         <hr>
