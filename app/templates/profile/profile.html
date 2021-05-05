@@ -6,6 +6,7 @@
     <div class="col-md-1"></div>
     <div class="col-md-4 black">
         <div class="content-section mt-4">
+          <div class="sectionc">
             {% for message in get_flashed_messages() %}
             <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -17,20 +18,16 @@
                 <span class="text-danger">{{ error }}</span></br>
               {% endfor %}
             {%endif%}
-    <div class="card testimonial-card">
-    <div class="card-up indigo lighten-1"></div>
-    <div class="avatar mx-auto white">
-      <img src="{{profile_pic_path}}" class="rounded-circle account-img mt-2" alt="woman avatar">
-    </div>
+    <div class="cards">
     <div class="card-body">
       <h4 class="card-title text-center">{{current_user.username|title}}</h4>
       <hr>
       <p> {{current_user.email}} </p>
       <p><i class="fas fa-quote-left"></i> {{current_user.bio}} <i class="fas fa-quote-right"></i> </p>
-      <button class="btn btn-sm btn-info" id="showform"> Update Profile</button>
     </div>
       
       </div>
+    </div>
     </div>
   </div>
   <div class="col-md-6">
@@ -41,5 +38,6 @@
         </div>
       </div>
   </div>
+</div>
 </div>
 {% endblock %}

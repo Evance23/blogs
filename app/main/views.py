@@ -43,7 +43,7 @@ def new_blog():
 
 @main.route('/blog/<id>')
 def blog(id):
-    comments = Comment.query.filter_by(blog_id).all()
+    comments = Comment.query.filter_by(blog_id=id).all()
     blog = Blog.query.get(id)
     return render_template('blog.html', blog=blog,comments=comments)
 
